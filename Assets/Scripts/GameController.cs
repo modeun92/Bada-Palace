@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public MazeGenerator MazeGenerator;
+    public MazeConstructor MazeGenerator;
     public InventoryManager Inventory;
     public int Level = 1;
     public int Stage = 1;
@@ -22,9 +22,9 @@ public class GameController : MonoBehaviour
     public void ToTheNextStage()
     {
         Stage++;
-        if (Level < MazeGenerator.MAXIMUM_LEVEL)
+        if (Level < MazeConstructor.MAXIMUM_LEVEL)
         {
-            if (Stage >= MazeGenerator.MAXIMUM_STAGE)
+            if (Stage >= MazeConstructor.MAXIMUM_STAGE)
             {
                 Stage = 1;
                 Level++;
@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
     private void PlayMazeGame()
     {
         MazeGenerator.Generate(Level, Stage);
+        Debug.Log("CAMECONTROLLER: PlayMazeGame()");
         //depending on level ramdomly giving the items as a gift
     }
     private void TryAddItem(ItemType aItemType)

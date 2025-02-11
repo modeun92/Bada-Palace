@@ -15,22 +15,16 @@ public class GameTotalEventManager : MonoBehaviour
     private static GameTotalEventManager instance = null;
     void Awake()
     {
-        if (null == instance)
-        {
-            OnGameStarted = () => { GameState = GameState.PLAYING; };
-            OnGamePaused = () => { GameState = GameState.PAUSED; };
-            OnGameResumed = () => { GameState = GameState.PLAYING; };
-            OnGameWinning = () => { GameState = GameState.PAUSED; };
-            OnGameLosing = () => { GameState = GameState.PAUSED; };
-            OnGameEnded = () => { GameState = GameState.PAUSED; };
+        OnGameStarted = () => { GameState = GameState.PLAYING; };
+        OnGamePaused = () => { GameState = GameState.PAUSED; };
+        OnGameResumed = () => { GameState = GameState.PLAYING; };
+        OnGameWinning = () => { GameState = GameState.PAUSED; };
+        OnGameLosing = () => { GameState = GameState.PAUSED; };
+        OnGameEnded = () => { GameState = GameState.PAUSED; };
 
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+        StartGame();
     }
     public static GameTotalEventManager Instance
     {

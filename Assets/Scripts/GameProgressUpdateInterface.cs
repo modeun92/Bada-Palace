@@ -135,10 +135,10 @@ public class GameProgressUpdateInterface : MonoBehaviour
             }
             else
             {
-                stage = MazeGenerator.MAXIMUM_STAGE;
+                stage = MazeConstructor.MAXIMUM_STAGE;
             }
         }
-        else if (level < MazeGenerator.MAXIMUM_LEVEL && stage > MazeGenerator.MAXIMUM_STAGE)
+        else if (level < MazeConstructor.MAXIMUM_LEVEL && stage > MazeConstructor.MAXIMUM_STAGE)
         {
             stage = 1;
             level++;
@@ -148,9 +148,9 @@ public class GameProgressUpdateInterface : MonoBehaviour
         {
             level = 1;
         }
-        else if (level > MazeGenerator.MAXIMUM_LEVEL)
+        else if (level > MazeConstructor.MAXIMUM_LEVEL)
         {
-            level = MazeGenerator.MAXIMUM_LEVEL;
+            level = MazeConstructor.MAXIMUM_LEVEL;
         }
 
         if (record.CompareTo(level, stage) == -1)

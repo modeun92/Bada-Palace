@@ -1381,16 +1381,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 858799258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff9aab1b8daf0df4f88647fe5071aa7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 80d016757dc757e42a7759b4e938f166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeparturePoint: {fileID: 154550209}
-  Destination: {fileID: 1763300749}
+  Source: {fileID: 154550209}
+  Target: {fileID: 1763300749}
   Wall: {fileID: 2812163251679384838, guid: f358d1d46c343234987a1c62613915ea, type: 3}
-  LongWallCount: 10
-  WallScale: 1
   RightDark: {fileID: 2084219927}
   TopDark: {fileID: 1109101581}
+  LongWallCount: 5
+  WallScale: 1
 --- !u!850595691 &891900142
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -2064,6 +2064,7 @@ GameObject:
   - component: {fileID: 1180582482}
   - component: {fileID: 1180582484}
   - component: {fileID: 1180582483}
+  - component: {fileID: 1180582485}
   m_Layer: 0
   m_Name: ChiefGameController
   m_TagString: Untagged
@@ -2185,6 +2186,19 @@ MonoBehaviour:
   Inventory: {fileID: 981821113}
   Level: 1
   Stage: 1
+--- !u!114 &1180582485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180582478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d778bb196fcc4fa4785cbbf88872576f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameState: 1
 --- !u!1 &1186288757
 GameObject:
   m_ObjectHideFlags: 0
