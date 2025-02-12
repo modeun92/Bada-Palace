@@ -19,6 +19,7 @@ public class DestinationManager : MonoBehaviour
         {
             mAudioSource.Play();
             mOnDestinated.Invoke();
+            Debug.Log("TOUCHED");
         }
         
     }

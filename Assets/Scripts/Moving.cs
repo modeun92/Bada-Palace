@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Moving : MonoBehaviour
 {
-    public float MoveSpeed = 4f;
+    public float MoveSpeed = 8f;
     public JoyStickController JoyStick;
     public RuntimeAnimatorController FemaleController;
     public RuntimeAnimatorController MaleController;
@@ -28,7 +28,6 @@ public class Moving : MonoBehaviour
         }
         else
         {
-            Debug.Log($"game state = {GameTotalEventManager.Instance.GameState}");
             Invoke(nameof(StopMoving), 0.2f);
         }
     }
@@ -60,8 +59,6 @@ public class Moving : MonoBehaviour
         }
         mAnimator.SetBool("IsMoving", lVelocity.magnitude != 0f);
         mRigidbody.velocity = lVelocity * MoveSpeed;
-
-        Debug.Log($"velocity : {mRigidbody.velocity}");
     }
     private Vector2 RespondToJoyStick()
     {

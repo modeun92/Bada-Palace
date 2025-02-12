@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Assets.Scripts.BasicClasses;
+using Assets.Scripts.Maze;
 using System.Collections;
+using Assets.Scripts.BasicClasses;
 
 public class MazeConstructor : MonoBehaviour
 {

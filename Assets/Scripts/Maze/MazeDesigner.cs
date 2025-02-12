@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.BasicClasses;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.BasicClasses
+namespace Assets.Scripts.Maze
 {
     internal class MazeDesigner
     {

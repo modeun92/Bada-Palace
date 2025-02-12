@@ -18,7 +18,7 @@ public class GameTotalEventManager : MonoBehaviour
         OnGameStarted = () => { GameState = GameState.PLAYING; };
         OnGamePaused = () => { GameState = GameState.PAUSED; };
         OnGameResumed = () => { GameState = GameState.PLAYING; };
-        OnGameWinning = () => { GameState = GameState.PAUSED; };
+        OnGameWinning = () => { SetPause(); Debug.Log("WON so PAUSED"); };
         OnGameLosing = () => { GameState = GameState.PAUSED; };
         OnGameEnded = () => { GameState = GameState.PAUSED; };
 
@@ -30,12 +30,12 @@ public class GameTotalEventManager : MonoBehaviour
     {
         get
         {
-            if (null == instance)
-            {
-                return null;
-            }
             return instance;
         }
+    }
+    private void SetPause()
+    {
+        GameState = GameState.PAUSED;
     }
     public void StartGame()
     {
@@ -54,6 +54,7 @@ public class GameTotalEventManager : MonoBehaviour
     }
     public void WinGame()
     {
+        Debug.Log("Game WON!");
         OnGameWinning();
     }
     public void LoseGame()

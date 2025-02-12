@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     {
 
     }
-    public void ToTheNextStage()
+    public void GoToNextStage()
     {
         Stage++;
         if (Level < MazeConstructor.MAXIMUM_LEVEL)
@@ -48,7 +48,6 @@ public class GameController : MonoBehaviour
     private void PlayMazeGame()
     {
         MazeGenerator.Generate(Level, Stage);
-        Debug.Log("CAMECONTROLLER: PlayMazeGame()");
         //depending on level ramdomly giving the items as a gift
     }
     private void TryAddItem(ItemType aItemType)
