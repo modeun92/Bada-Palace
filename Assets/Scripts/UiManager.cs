@@ -11,7 +11,7 @@ public class UiManager : MonoBehaviour
     public Image WinningPanel;
     public Image ConfigPanel;
     public Image AdminPanel;
-    
+
     private Image[] mImages;
     private PanelType mPanels;
     // Start is called before the first frame update
@@ -31,14 +31,17 @@ public class UiManager : MonoBehaviour
     void Update()
     {
     }
-    public void ActivateConfig(bool aToggle)
+    public void OpenWinningPanel()
     {
-        float scalex = 0f;
-        if (aToggle)
-        {
-            scalex = 1f;
-        }
-        ConfigPanel.GetComponent<Transform>().localScale = new Vector3(scalex, 1f, 1f);
+        ActivateOnlyThisPanel(PanelType.WINNING_PANEL);
+    }
+    public void OpenPlayingPanel()
+    {
+        ActivateOnlyThisPanel(PanelType.PLAYING_PANEL);
+    }
+    public void OpenPausingPanel()
+    {
+        ActivateOnlyThisPanel(PanelType.PAUSE_PANEL);
     }
     private void ActivateOnlyThisPanel(PanelType aPanelType)
     {

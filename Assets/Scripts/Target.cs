@@ -2,27 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-public class DestinationManager : MonoBehaviour
+public class Target : MonoBehaviour
 {
-    public OnDestinated OnDestinated { get { return mOnDestinated; } set { mOnDestinated = value; } }
+    public OnArrived OnArrived { get { return m_OnArrived; } set { m_OnArrived = value; } }
     [SerializeField]
-    private OnDestinated mOnDestinated = new OnDestinated();
+    private OnArrived m_OnArrived = new OnArrived();
     private AudioSource mAudioSource;
+    private bool m_IsArrivaable;
     // Start is called before the first frame update
     void Start()
     {
         mAudioSource = GetComponent<AudioSource>();
     }
+    public void SetArrivable(bool a_IsArrivable)
+    {
+        m_IsArrivaable = a_IsArrivable;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (GameTotalEventManager.Instance.GameState == GameState.PLAYING && collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             mAudioSource.Play();
-            mOnDestinated.Invoke();
+            m_OnArrived.Invoke();
             Debug.Log("TOUCHED");
         }
-        
     }
 }
 [Serializable]
-public class OnDestinated : UnityEvent { }
+public class OnArrived : UnityEvent { }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.Scripts;
+using Assets.Scripts.Maze;
 public class GameProgressUpdateInterface : MonoBehaviour
 {
     public Button lvlIncr;

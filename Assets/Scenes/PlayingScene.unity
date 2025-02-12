@@ -205,7 +205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: EndGame
         m_Mode: 1
@@ -528,7 +528,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -1637,9 +1637,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1180582485}
+        m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
+        m_MethodName: TellToPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1926,14 +1926,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1180582479}
-  - component: {fileID: 1180582480}
   - component: {fileID: 1180582481}
   - component: {fileID: 1180582482}
   - component: {fileID: 1180582484}
   - component: {fileID: 1180582483}
   - component: {fileID: 1180582485}
   m_Layer: 0
-  m_Name: ChiefGameController
+  m_Name: GameHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1954,19 +1953,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1180582480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180582478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d778bb196fcc4fa4785cbbf88872576f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameState: 2
 --- !u!114 &1180582481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2062,10 +2048,166 @@ MonoBehaviour:
   m_GameObject: {fileID: 1180582478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d778bb196fcc4fa4785cbbf88872576f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b1842682bff5b6468a716beb3226d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameState: 1
+  OnWinning:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180582481}
+        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
+        m_MethodName: OpenWinningPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1180582484}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: GoToNextStage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1763300752}
+        m_TargetAssemblyTypeName: Target, Assembly-CSharp
+        m_MethodName: SetArrivable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1417975394}
+        m_TargetAssemblyTypeName: Mover, Assembly-CSharp
+        m_MethodName: SetMovable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlaying:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180582481}
+        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
+        m_MethodName: OpenPlayingPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1180582484}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: PlayMazeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1417975394}
+        m_TargetAssemblyTypeName: Mover, Assembly-CSharp
+        m_MethodName: SetMovable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1763300752}
+        m_TargetAssemblyTypeName: Target, Assembly-CSharp
+        m_MethodName: SetArrivable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnPausing:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180582481}
+        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
+        m_MethodName: OpenPausingPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1417975394}
+        m_TargetAssemblyTypeName: Mover, Assembly-CSharp
+        m_MethodName: SetMovable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnResuming:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180582481}
+        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
+        m_MethodName: OpenPlayingPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1417975394}
+        m_TargetAssemblyTypeName: Mover, Assembly-CSharp
+        m_MethodName: SetMovable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  target: {fileID: 0}
 --- !u!1 &1186288757
 GameObject:
   m_ObjectHideFlags: 0
@@ -2148,9 +2290,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: PauseGame
+      - m_Target: {fileID: 1180582485}
+        m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
+        m_MethodName: TellToPause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2281,21 +2423,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582484}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: GoToNextStage
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1180582480}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1180582485}
+        m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
+        m_MethodName: TellToPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2724,7 +2854,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: StartGame
         m_Mode: 1
@@ -2860,6 +2990,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6855276821878129028}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1417975394 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6855276820477466592, guid: f50381a6277c6cb4c82cd137a3f9e357,
+    type: 3}
+  m_PrefabInstance: {fileID: 6855276821878129028}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154550209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6d376cc7dbee841944f891347d4187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1474494588
 GameObject:
   m_ObjectHideFlags: 0
@@ -3075,7 +3217,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: EndGame
         m_Mode: 1
@@ -3373,7 +3515,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: EndGame
         m_Mode: 1
@@ -3506,7 +3648,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: StartGame
         m_Mode: 1
@@ -4028,6 +4170,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1902852944025268584}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1763300752 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1902852944025268584}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763300749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb64e4de6de36194db2e2036228da4a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1787160789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4672,7 +4826,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: EndGame
         m_Mode: 1
@@ -5308,9 +5462,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582480}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ResumeGame
+      - m_Target: {fileID: 1180582485}
+        m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
+        m_MethodName: TellToResume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5619,6 +5773,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1122409573684967300, guid: ee53cb7253d918341946fbb93fd20349,
         type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000030517578
+      objectReference: {fileID: 0}
+    - target: {fileID: 1122409573684967300, guid: ee53cb7253d918341946fbb93fd20349,
+        type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -5737,9 +5896,109 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
         type: 3}
+      propertyPath: m_OnArrived.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: m_OnArrived.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: m_OnArrived.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1180582485}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
       propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1180582480}
+      objectReference: {fileID: 1180582481}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: m_OnArrived.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: m_OnArrived.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TellToWin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetWinningPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: WinGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: m_OnArrived.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UiManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameTotalEventManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: m_OnArrived.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902852944445269242, guid: febd223c88f9ffc419f1f0a8edef47e8,
+        type: 3}
+      propertyPath: mOnDestinated.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5776,7 +6035,7 @@ PrefabInstance:
     - target: {fileID: 6855276820477466592, guid: f50381a6277c6cb4c82cd137a3f9e357,
         type: 3}
       propertyPath: MoveSpeed
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6855276820477466592, guid: f50381a6277c6cb4c82cd137a3f9e357,
         type: 3}

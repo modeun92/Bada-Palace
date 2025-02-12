@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Maze;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class GameController : MonoBehaviour
     {
 
     }
+
     public void GoToNextStage()
     {
         Stage++;
@@ -30,6 +32,11 @@ public class GameController : MonoBehaviour
                 Level++;
             }
         }
+    }
+    public void PlayMazeGame()
+    {
+        MazeGenerator.Generate(Level, Stage);
+        //depending on level ramdomly giving the items as a gift
     }
     private void AwardPrize()
     {
@@ -44,11 +51,6 @@ public class GameController : MonoBehaviour
         TryAddItem(ItemType.SPEED_POTION, 1);
         TryAddItem(ItemType.INVISIBLE_POTION, 3);
         //
-    }
-    private void PlayMazeGame()
-    {
-        MazeGenerator.Generate(Level, Stage);
-        //depending on level ramdomly giving the items as a gift
     }
     private void TryAddItem(ItemType aItemType)
     {

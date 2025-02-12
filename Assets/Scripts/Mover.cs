@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Moving : MonoBehaviour
+public class Mover : MonoBehaviour
 {
     public float MoveSpeed = 8f;
     public JoyStickController JoyStick;
     public RuntimeAnimatorController FemaleController;
     public RuntimeAnimatorController MaleController;
 
+    private bool IsMovable;
     private Rigidbody2D mRigidbody;
     private Animator mAnimator;
     // Start is called before the first frame update
@@ -22,7 +23,7 @@ public class Moving : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameTotalEventManager.Instance.GameState == GameState.PLAYING)
+        if (IsMovable)
         {
             Move();
         }
@@ -31,7 +32,11 @@ public class Moving : MonoBehaviour
             Invoke(nameof(StopMoving), 0.2f);
         }
     }
-    private void StopMoving()
+    public void SetMovable(bool a_IsMovable)
+    {
+        IsMovable = a_IsMovable;
+    }
+    public void StopMoving()
     {
         mRigidbody.velocity = new Vector2();
     }
