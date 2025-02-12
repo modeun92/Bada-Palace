@@ -23,8 +23,8 @@ public class GameProgressUpdateInterface : MonoBehaviour
     void Start()
     {
         //GameMainSettingManager.GetProgressStatic(out current, out max);
-        GameMainSettingManager.GetValue(ConfigParameter.CURRENT_PROGRESS, out current);
-        GameMainSettingManager.GetValue(ConfigParameter.RECORD_PROGRESS, out record);
+        ConfigManager.GetValue(ConfigParameter.CURRENT_PROGRESS, out current);
+        ConfigManager.GetValue(ConfigParameter.RECORD_PROGRESS, out record);
         level = current.Level;
         stage = current.Stage;
         Debug.Log("level:" + level + ",stage:"+stage);
@@ -39,7 +39,7 @@ public class GameProgressUpdateInterface : MonoBehaviour
     }
     public void Apply()
     {
-        GameMainSettingManager.SetValue(ConfigParameter.CURRENT_PROGRESS, new GameProgress(level, stage));
+        ConfigManager.SetValue(ConfigParameter.CURRENT_PROGRESS, new GameProgress(level, stage));
     }
     public void SetProgress(string message)
     {

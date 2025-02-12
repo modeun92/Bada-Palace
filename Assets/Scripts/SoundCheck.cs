@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using Assets.Scripts.Global;
 public class SoundCheck : MonoBehaviour, IPointerUpHandler
 {
     public AudioSource sound;
@@ -21,16 +22,14 @@ public class SoundCheck : MonoBehaviour, IPointerUpHandler
         mixer.SetFloat("MasterVolume", soundValue);
         sound.Play();
     }
+    // UNITY
     public void Apply()
     {
-        //GameMainSettingManager.SetVolumeStatic(soundValue);
-        GameMainSettingManager.SetValue(Assets.Scripts.ConfigParameter.VOLUME, soundValue);
+        ConfigManager.Setting.Volume = soundValue;
     }
-    // Start is called before the first frame update
     void Start()
     {
-        //GameMainSettingManager.GetVolumeStatic(out soundValue);
-        GameMainSettingManager.GetValue(Assets.Scripts.ConfigParameter.VOLUME, out soundValue);
+        soundValue = ConfigManager.Setting.Volume;
         slider.value = soundValue;
         mixer.SetFloat("MasterVolume", soundValue);
     }

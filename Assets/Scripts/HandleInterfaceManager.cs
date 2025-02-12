@@ -19,7 +19,7 @@ namespace Assets.Scripts
             source = GetComponent<AudioSource>();
             bool isRighthanded;
             //GameMainSettingManager.GetUserHandStatic(out isRighthanded);
-            GameMainSettingManager.GetValue(ConfigParameter.IS_RIGHTHANDED, out isRighthanded);
+            ConfigManager.GetValue(ConfigParameter.IS_RIGHTHANDED, out isRighthanded);
             if (isRighthanded)
             {
                 scrollbar.value = 1f;
@@ -56,7 +56,7 @@ namespace Assets.Scripts
         public void Apply()
         {
             //GameMainSettingManager.SetUserHandStatic(isRighthanded);
-            GameMainSettingManager.SetValue(ConfigParameter.IS_RIGHTHANDED, isRighthanded);
+            ConfigManager.SetValue(ConfigParameter.IS_RIGHTHANDED, isRighthanded);
         }
     }
 }

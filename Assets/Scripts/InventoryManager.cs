@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Global;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +9,7 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject ItemForm;
     public GameObject Content;
-    public Text GoldAmount;
+    public TextMeshProUGUI GoldAmount;
 
     private RectTransform mContentTransform;
     private GridLayoutGroup mContentGridLayout;
@@ -26,42 +28,38 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CheckInit();
+        Init();
     }
 
     // Update is called once per frame
     void Update()
     {
     }
-    private void CheckInit()
+    private void Init()
     {
         lock (locker)
         {
             if (!mIsInitialized)
             {
-                Initiate();
+                mItemLibrary = new Dictionary<ItemType, GameObject>();
+                mContentTransform = Content.GetComponent<RectTransform>();
+                mContentGridLayout = Content.GetComponent<GridLayoutGroup>();
+                mCellSize = mContentGridLayout.cellSize;
+                mSpacing = mContentGridLayout.spacing;
+                mContentDefaultWidth = GetComponent<RectTransform>().rect.width;
+                mContentTransform.sizeDelta = new Vector2(mContentDefaultWidth, mContentTransform.sizeDelta.y);
+                mCellUnitWidth = mCellSize.x + mSpacing.x;
+                mFitCount = (int)(mContentDefaultWidth / mCellUnitWidth);
+                mIsInitialized = true;
+                LoadInventory();
             }
         }
-    }
-    private void Initiate()
-    {
-        mItemLibrary = new Dictionary<ItemType, GameObject>();
-        mContentTransform = Content.GetComponent<RectTransform>();
-        mContentGridLayout = Content.GetComponent<GridLayoutGroup>();
-        mCellSize = mContentGridLayout.cellSize;
-        mSpacing = mContentGridLayout.spacing;
-        mContentDefaultWidth = GetComponent<RectTransform>().rect.width;
-        mContentTransform.sizeDelta = new Vector2(mContentDefaultWidth, mContentTransform.sizeDelta.y);
-        mCellUnitWidth = mCellSize.x + mSpacing.x;
-        mFitCount = (int)(mContentDefaultWidth / mCellUnitWidth);
-        mIsInitialized = true;
-        LoadInventory();
     }
     private void LoadInventory()
     {
         Item[] lItems = null;
-        GameMainSettingManager.GetValue(Assets.Scripts.ConfigParameter.ITEMS, out lItems);
-        GameMainSettingManager.GetValue(Assets.Scripts.ConfigParameter.GOLD_AMOUNT, out mGoldAmount);
+        lItems = ConfigManager.Setting.Items;
+        mGoldAmount = ConfigManager.Setting.GoldAmount;
         if (lItems != null)
         {
             foreach (var lItem in lItems)
@@ -81,7 +79,7 @@ public class InventoryManager : MonoBehaviour
     }
     private void ChangeContentSize()
     {
-        CheckInit();
+        Init();
         if (mItemCount > mFitCount)
         {
             var lWidth = (mCellUnitWidth * mItemCount) + mSpacing.x;
@@ -99,6 +97,15 @@ public class InventoryManager : MonoBehaviour
         {
             AddItem(aItem);
             AddGold(-aItem.Price);
+            GoldAmount.text = mGoldAmount.ToString();
+        }
+    }
+    public void SellItem(Item aItem)
+    {
+        lock (locker)
+        {
+            AddItem(aItem);
+            AddGold(aItem.Price);
             GoldAmount.text = mGoldAmount.ToString();
         }
     }

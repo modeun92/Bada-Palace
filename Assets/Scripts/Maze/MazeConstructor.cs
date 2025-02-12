@@ -59,7 +59,6 @@ namespace Assets.Scripts.Maze
         void Start()
         {
             Init();
-            Generate(5, 3);
         }
 
         // Update is called once per frame

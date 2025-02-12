@@ -11,7 +11,7 @@ public class Init : MonoBehaviour
     {
         float soundValue;
         //GameMainSettingManager.GetVolumeStatic(out soundValue);
-        GameMainSettingManager.GetValue(Assets.Scripts.ConfigParameter.VOLUME, out soundValue);
+        ConfigManager.GetValue(Assets.Scripts.ConfigParameter.VOLUME, out soundValue);
         mixer.SetFloat("MasterVolume", soundValue);
     }
 
