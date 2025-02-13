@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Global;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -18,12 +19,12 @@ namespace Assets.Scripts
 
         public int MaxStagePerLevel = 20;
 
-        public int ProfitScalePerLevel = 3;
-        public int ProfitRatioPerStage = 7;
         public int ProfitPerEvent = 5;
 
         public Item[] Items = null;
         public GameProgress CurrentProgress = new GameProgress();
         public GameProgress RecordProgress = new GameProgress();
+        public GameProgress ProfitScaleProgress = new GameProgress() { Level = 3, Stage = 7 };
+        public GameProgress MaximumProgress = new GameProgress() { Level = 31, Stage = 20 };
     }
 }

@@ -19,9 +19,6 @@ namespace Assets.Scripts.Maze
         [SerializeField]
         private GameObject TopDark;
 
-        public const int MAXIMUM_LEVEL = 31;
-        public const int MAXIMUM_STAGE = 20;
-
         private const int MAXIMUM_LENGTH = 20;
         private const int MINIMUM_SIZE = 5;
 

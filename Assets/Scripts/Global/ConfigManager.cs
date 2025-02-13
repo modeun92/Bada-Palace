@@ -6,7 +6,7 @@ namespace Assets.Scripts.Global
     {
         private const string CONFIG = "config.badapalace";
 
-        public static GameConfigInterface Setting
+        public static GameConfigCorrespondent Setting
         {
             get
             {
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Global
         private static ConfigManager _instance;
         private static object _locker = new object();
 
-        private GameConfigInterface m_SettingInterface;
+        private GameConfigCorrespondent m_SettingInterface;
         private GameConfig m_Setting;
         private ConfigManager()
         {
@@ -50,16 +50,16 @@ namespace Assets.Scripts.Global
                 Debug.Log("CONFIG doesn't exist in PlayerPrefs.");
                 Reset();
             }
-            m_SettingInterface = new GameConfigInterface(m_Setting, SaveSetting);
+            m_SettingInterface = new GameConfigCorrespondent(m_Setting, SaveSetting);
             Debug.Log("LoadSetting done.");
         }
         private void Reset()
         {
             m_Setting = new GameConfig();
             m_Setting.CurrentProgress = new GameProgress();
-            m_Setting.RecordProgress = new GameRecordProgress();
+            m_Setting.RecordProgress = new GameProgress();
             SaveSetting();
-            m_SettingInterface = new GameConfigInterface(m_Setting, SaveSetting);
+            m_SettingInterface = new GameConfigCorrespondent(m_Setting, SaveSetting);
         }
     }
 }

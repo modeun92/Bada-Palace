@@ -6,11 +6,16 @@ using UnityEngine.Events;
 
 public class GameHandler : MonoBehaviour
 {
-    public OnWinning OnWinning;
-    public OnPlaying OnPlaying;
-    public OnPausing OnPausing;
-    public OnResuming OnResuming;
-    public Target target;
+    [SerializeField]
+    private OnWinning OnWinning;
+    [SerializeField]
+    private OnPlaying OnPlaying;
+    [SerializeField]
+    private OnPausing OnPausing;
+    [SerializeField]
+    private OnResuming OnResuming;
+    [SerializeField]
+    private Target target;
     // Start is called before the first frame update
     void Start()
     {

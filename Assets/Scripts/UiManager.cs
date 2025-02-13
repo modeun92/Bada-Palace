@@ -19,12 +19,6 @@ public class UiManager : MonoBehaviour
     {
         Debug.Log("UiManager initing...");
         mImages = new Image[]{ PlayingPanel, PausePanel, LosingPanel, WinningPanel, ConfigPanel, AdminPanel };
-        GameTotalEventManager.Instance.OnGameStarted += () => { ActivateOnlyThisPanel(PanelType.PLAYING_PANEL); };
-        GameTotalEventManager.Instance.OnGamePaused +=  () => { ActivateOnlyThisPanel(PanelType.PAUSE_PANEL); };
-        GameTotalEventManager.Instance.OnGameResumed += () => { ActivateOnlyThisPanel(PanelType.PLAYING_PANEL); };
-        GameTotalEventManager.Instance.OnGameWinning += () => { Debug.Log("WINNING SCREEN");  ActivateOnlyThisPanel(PanelType.WINNING_PANEL); };
-        GameTotalEventManager.Instance.OnGameLosing +=  () => { ActivateOnlyThisPanel(PanelType.LOSING_PANEL); };
-        GameTotalEventManager.Instance.OnGameEnded +=   () => { ActivateOnlyThisPanel(PanelType.NONE); };
     }
 
     // Update is called once per frame

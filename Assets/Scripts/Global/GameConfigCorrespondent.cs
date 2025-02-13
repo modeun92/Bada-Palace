@@ -1,9 +1,19 @@
-﻿using System;
+﻿using Assets.Scripts.Maze;
+using System;
+using UnityEditor.SceneManagement;
 
 namespace Assets.Scripts.Global
 {
-    public class GameConfigInterface
+    public class GameConfigCorrespondent
     {
+        public GameConfigCorrespondent(GameConfig a_Setting, Action a_OnChanged)
+        {
+            m_Setting = a_Setting;
+            m_OnChanged = a_OnChanged;
+            m_ProgressCorrespondent = new GameProgressCorrespondent(
+                m_Setting.CurrentProgress, m_Setting.RecordProgress, m_Setting.MaximumProgress,
+                m_OnChanged);
+        }
         public float Volume
         {
             get => m_Setting.Volume;
@@ -27,8 +37,8 @@ namespace Assets.Scripts.Global
                 int l_Profit = a_Reason switch
                 {
                     ProfitReason.GameWon =>
-                       (m_Setting.CurrentProgress.Level * m_Setting.ProfitScalePerLevel) +
-                       (m_Setting.CurrentProgress.Stage / m_Setting.ProfitRatioPerStage),
+                       (m_Setting.CurrentProgress.Level * m_Setting.ProfitScaleProgress.Level) +
+                       (m_Setting.CurrentProgress.Stage / m_Setting.ProfitScaleProgress.Stage),
                     ProfitReason.Event => m_Setting.ProfitPerEvent,
                     _ => 0
                 };
@@ -41,24 +51,13 @@ namespace Assets.Scripts.Global
             get => m_Setting.Items;
             set { lock (locker) { m_Setting.Items = value; m_OnChanged(); } }
         }
-        public GameProgress CurrentProgress //TO_FIX
-        {
-            get => m_Setting.CurrentProgress;
-            set { lock (locker) { m_Setting.CurrentProgress = value; m_OnChanged(); } }
-        }
-        public GameProgress RecordProgress //TO_FIX
-        {
-            get => m_Setting.RecordProgress;
-            set { lock (locker) { m_Setting.RecordProgress = value; m_OnChanged(); } }
-        }
-        public GameConfigInterface(GameConfig a_Setting, Action a_OnChanged)
-        {
-            m_Setting = a_Setting;
-            m_OnChanged = a_OnChanged;
-        }
+        public GameProgressCorrespondent ProgressCorrespondent { get => m_ProgressCorrespondent; }
+
+        private GameProgressCorrespondent m_ProgressCorrespondent;
         private Action m_OnChanged;
         private GameConfig m_Setting;
         private object locker = new object();
     }
-    public enum ProfitReason { GameWon, Event, }
+    internal enum CompareType { Smaller = -1, Same = 0, Bigger = 1 }
+    public enum ProfitReason { GameWon, Event, SELLING, BUYING }
 }

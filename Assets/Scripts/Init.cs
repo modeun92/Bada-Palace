@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Global;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -11,7 +12,7 @@ public class Init : MonoBehaviour
     {
         float soundValue;
         //GameMainSettingManager.GetVolumeStatic(out soundValue);
-        ConfigManager.GetValue(Assets.Scripts.ConfigParameter.VOLUME, out soundValue);
+        soundValue = ConfigManager.Setting.Volume;
         mixer.SetFloat("MasterVolume", soundValue);
     }
 

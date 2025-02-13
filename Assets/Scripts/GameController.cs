@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Maze;
+﻿using Assets.Scripts.Global;
+using Assets.Scripts.Maze;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,15 +24,7 @@ public class GameController : MonoBehaviour
 
     public void GoToNextStage()
     {
-        Stage++;
-        if (Level < MazeConstructor.MAXIMUM_LEVEL)
-        {
-            if (Stage >= MazeConstructor.MAXIMUM_STAGE)
-            {
-                Stage = 1;
-                Level++;
-            }
-        }
+        ConfigManager.Setting.ProgressCorrespondent.IncreaseRecordStage();
     }
     public void PlayMazeGame()
     {

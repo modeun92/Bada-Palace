@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Global;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,7 @@ namespace Assets.Scripts
         {
             source = GetComponent<AudioSource>();
             bool isRighthanded;
-            //GameMainSettingManager.GetUserHandStatic(out isRighthanded);
-            ConfigManager.GetValue(ConfigParameter.IS_RIGHTHANDED, out isRighthanded);
+            isRighthanded = ConfigManager.Setting.IsRighthanded;
             if (isRighthanded)
             {
                 scrollbar.value = 1f;
@@ -55,8 +55,7 @@ namespace Assets.Scripts
         }
         public void Apply()
         {
-            //GameMainSettingManager.SetUserHandStatic(isRighthanded);
-            ConfigManager.SetValue(ConfigParameter.IS_RIGHTHANDED, isRighthanded);
+            ConfigManager.Setting.IsRighthanded = isRighthanded;
         }
     }
 }
