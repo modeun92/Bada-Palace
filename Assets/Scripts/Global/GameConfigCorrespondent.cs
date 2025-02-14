@@ -1,18 +1,19 @@
 ﻿using Assets.Scripts.Maze;
 using System;
-using UnityEditor.SceneManagement;
+using UnityEngine;
 
 namespace Assets.Scripts.Global
 {
     public class GameConfigCorrespondent
     {
-        public GameConfigCorrespondent(GameConfig a_Setting, Action a_OnChanged)
+        public GameConfigCorrespondent(ref GameConfig a_Setting, Action a_OnChanged)
         {
             m_Setting = a_Setting;
             m_OnChanged = a_OnChanged;
-            m_ProgressCorrespondent = new GameProgressCorrespondent(
-                m_Setting.CurrentProgress, m_Setting.RecordProgress, m_Setting.MaximumProgress,
-                m_OnChanged);
+            //m_ProgressCorrespondent = new GameProgressCorrespondent(
+            //    ref m_Setting.CurrentProgress, ref m_Setting.RecordProgress, ref m_Setting.MaximumProgress,
+            //    () => { m_Setting.CurrentProgress = m_ProgressCorrespondent.CurrentProgress; m_OnChanged();
+            //        Debug.Log("CONFIG"); });
         }
         public float Volume
         {
@@ -51,9 +52,9 @@ namespace Assets.Scripts.Global
             get => m_Setting.Items;
             set { lock (locker) { m_Setting.Items = value; m_OnChanged(); } }
         }
-        public GameProgressCorrespondent ProgressCorrespondent { get => m_ProgressCorrespondent; }
+        //public GameProgressCorrespondent ProgressCorrespondent { get => m_ProgressCorrespondent; }
 
-        private GameProgressCorrespondent m_ProgressCorrespondent;
+        //private GameProgressCorrespondent m_ProgressCorrespondent;
         private Action m_OnChanged;
         private GameConfig m_Setting;
         private object locker = new object();

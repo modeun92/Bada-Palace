@@ -1,11 +1,8 @@
 ﻿using Assets.Scripts.BasicClasses;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UIElements;
 namespace Assets.Scripts
 {
     public class GridGraph
@@ -16,7 +13,7 @@ namespace Assets.Scripts
         private int mRowCount;
         private int m_Count;
         public List<Vector2Int> this[Vector2Int vec] => this[vec.x, vec.y];
-        public List<Vector2Int> this[int x, int y] => mGrid[x, y];
+        public List<Vector2Int> this[int x, int y] => mGrid[y, x];
         public GridGraph(int aColumnCount, int aRowCount)
         {
             Init(aColumnCount, aRowCount);
@@ -32,10 +29,10 @@ namespace Assets.Scripts
         }
         public bool TryGetValue(int aColumn, int aRow, out List<Vector2Int> a_Value)
         {
-            var l_Result = aColumn < mColumnCount && aRow < mRowCount;
-            if (l_Result)
+            var l_IsInRange = aColumn < mColumnCount && aRow < mRowCount;
+            if (l_IsInRange)
             {
-                a_Value = this[aRow, aColumn];
+                a_Value = this[aColumn, aRow];
             }
             else
             {
@@ -50,7 +47,7 @@ namespace Assets.Scripts
             {
                 for (int lColumn = 0; lColumn < mColumnCount; lColumn++)
                 {
-                    if (mGrid[lRow, lColumn].Count == 1)
+                    if (this[lColumn, lRow].Count == 1)
                     {
                         l_DeadEnds.Add(new Vector2Int(lColumn, lRow));
                     }
@@ -80,6 +77,34 @@ namespace Assets.Scripts
                 l_Target.Add(a_Source);
             }
             m_Count++;
+        }
+        public List<(Vector2Int, int)> FindDeadEndsFrom(Vector2Int a_Node)
+        {
+            var l_Visited = new Stack<Vector2Int>();
+            var l_DeadEnds = new List<(Vector2Int, int)>();
+            int l_Length = 0;
+            FindDeadEndsFrom(a_Node, l_Length, l_Visited, l_DeadEnds);
+            return l_DeadEnds;
+        }
+        private void FindDeadEndsFrom(Vector2Int a_Node, int a_Length, Stack<Vector2Int> a_Visited, List<(Vector2Int, int)> a_DeadEnds)
+        {
+            if (!a_Visited.Contains(a_Node))
+            {
+                a_Visited.Push(a_Node);
+                var l_NodeLinks = this[a_Node];
+                if (a_Length > 0 && l_NodeLinks.Count == 1) // undiscovered and the dead-end
+                {
+                    a_DeadEnds.Add((a_Node, a_Length));
+                }
+                else
+                {
+                    ++a_Length;
+                    foreach (var l_NodeLink in l_NodeLinks)
+                    {
+                        FindDeadEndsFrom(l_NodeLink, a_Length, a_Visited, a_DeadEnds);
+                    }
+                }
+            }
         }
         private void Init(int aColumnCount, int aRowCount)
         {

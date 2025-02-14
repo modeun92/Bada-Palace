@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditorInternal;
 
 namespace Assets.Scripts.Global
 {
@@ -57,7 +52,7 @@ namespace Assets.Scripts.Global
             return l_Clone;
         }
         public GameProgressCorrespondent(
-            GameProgress a_CurrentProgress, GameProgress a_RecordProgress, GameProgress a_MaximumProgress,
+            ref GameProgress a_CurrentProgress, ref GameProgress a_RecordProgress, ref GameProgress a_MaximumProgress,
             Action a_OnChanged)
         {
             m_CurrentProgress = a_CurrentProgress;
@@ -65,7 +60,7 @@ namespace Assets.Scripts.Global
             m_MaximumProgress = a_MaximumProgress;
             m_OnChanged = a_OnChanged;
         }
-        public void IncreaseRecordStage()
+        public void IncreaseStage()
         {
             lock (locker)
             {
@@ -81,9 +76,22 @@ namespace Assets.Scripts.Global
                             m_RecordProgress.Level++;
                         }
                     }
-                    m_CurrentProgress = m_RecordProgress;
-                    m_OnChanged();
+                    m_CurrentProgress.Level = m_RecordProgress.Level;
+                    m_CurrentProgress.Stage = m_RecordProgress.Stage;
                 }
+                else
+                {
+                    m_CurrentProgress.Stage++;
+                    if (m_CurrentProgress.Level < m_MaximumProgress.Level)
+                    {
+                        if (m_CurrentProgress.Stage == m_MaximumProgress.Stage)
+                        {
+                            m_CurrentProgress.Level++;
+                            m_CurrentProgress.Stage = 1;
+                        }
+                    }
+                }
+                m_OnChanged();
             }
         }
         public void LevelDown(
@@ -146,7 +154,7 @@ namespace Assets.Scripts.Global
         {
             if (m_IsStageUpable)
             {
-                m_CurrentProgress.Stage--;
+                m_CurrentProgress.Stage++;
                 if (m_CurrentProgress.Stage == m_MaximumProgress.Stage)
                 {
                     m_CurrentProgress.Level++;

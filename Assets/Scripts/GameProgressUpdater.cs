@@ -15,8 +15,8 @@ public class GameProgressUpdater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("level:" + ConfigManager.Setting.ProgressCorrespondent.CurrentProgress.Level + 
-            ",stage:"+ ConfigManager.Setting.ProgressCorrespondent.CurrentProgress.Stage);
+        Debug.Log("level:" + ConfigManager.Prog.CurrentProgress.Level + 
+            ",stage:"+ ConfigManager.Prog.CurrentProgress.Stage);
         UiUpdate();
     }
 
@@ -27,28 +27,28 @@ public class GameProgressUpdater : MonoBehaviour
     }
     public void LevelDown()
     {
-        ConfigManager.Setting.ProgressCorrespondent.LevelDown(
+        ConfigManager.Prog.LevelDown(
             out m_IsLevelDownable, out m_IsLevelUpable,
             out m_IsStageDownable, out m_IsStageUpable);
         UiUpdate();
     }
     public void LevelUp()
     {
-        ConfigManager.Setting.ProgressCorrespondent.LevelUp(
+        ConfigManager.Prog.LevelUp(
             out m_IsLevelDownable, out m_IsLevelUpable,
             out m_IsStageDownable, out m_IsStageUpable);
         UiUpdate();
     }
     public void StageDown()
     {
-        ConfigManager.Setting.ProgressCorrespondent.StageDown(
+        ConfigManager.Prog.StageDown(
             out m_IsLevelDownable, out m_IsLevelUpable,
             out m_IsStageDownable, out m_IsStageUpable);
         UiUpdate();
     }
     public void StageUp()
     {
-        ConfigManager.Setting.ProgressCorrespondent.StageUp(
+        ConfigManager.Prog.StageUp(
             out m_IsLevelDownable, out m_IsLevelUpable,
             out m_IsStageDownable, out m_IsStageUpable);
         UiUpdate();
@@ -60,7 +60,7 @@ public class GameProgressUpdater : MonoBehaviour
         StageDownButton.interactable = m_IsStageDownable;
         StageUpButton.interactable = m_IsStageUpable;
        
-        LevelText.text = "Level " + ConfigManager.Setting.ProgressCorrespondent.CurrentProgress.Level;
-        StageText.text = "Stage " + ConfigManager.Setting.ProgressCorrespondent.CurrentProgress.Stage;
+        LevelText.text = "Level " + ConfigManager.Prog.CurrentProgress.Level;
+        StageText.text = "Stage " + ConfigManager.Prog.CurrentProgress.Stage;
     }
 }

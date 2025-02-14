@@ -3,6 +3,7 @@ using UnityEngine;
 using Assets.Scripts.Maze;
 using System.Collections;
 using Assets.Scripts.BasicClasses;
+using System.Linq;
 
 namespace Assets.Scripts.Maze
 {
@@ -94,6 +95,7 @@ namespace Assets.Scripts.Maze
         }
         private void ReinitMazeInfo()
         {
+            Debug.Log($"MAZE : ReinitMazeInfo Level = {m_Level}, Stage = {m_Stage}.");
             InitRandom();
             SetSize();
             CloseOpenWalls();
@@ -258,7 +260,7 @@ namespace Assets.Scripts.Maze
             MazeDesigner.Generate(m_ColumnCount, m_RowCount, m_Random,
                 out var l_GridGraph, out var l_Links);
             OpenWalls(l_Links);
-            SetMission(l_GridGraph.GetDeadEnds().ToArray());
+            SetMission(l_GridGraph);
         }
 
         private void OpenWalls(List<NodeLink> a_Links)
@@ -267,19 +269,19 @@ namespace Assets.Scripts.Maze
             {
                 OpenWall(l_Link);
             }
+            Debug.Log($"OpenWalls done.");
         }
         private void OpenWall(NodeLink a_Link)
         {
             GameObject wall;
             if (mTotalVariableWalls.TryGetValue(a_Link, out wall))
             {
-                Debug.Log("link found!");
                 wall.gameObject.SetActive(false);
                 mOpenObjects.Push(wall);
             }
             else
             {
-                Debug.Log($"Doesn't exist! : {a_Link}");
+                Debug.Log($"Wall doesn't exist! : {a_Link}");
             }
         }
         private void CloseOpenWalls()
@@ -290,17 +292,18 @@ namespace Assets.Scripts.Maze
                 wall.gameObject.SetActive(true);
             }
         }
-        private void SetMission(Vector2Int[] a_DeadEnds)
+        private void SetMission(GridGraph a_GridGraph)
         {
-            var l_SourceIndex = m_Random.Next(0, a_DeadEnds.Length - 1);
-            var l_TargetIndex = m_Random.Next(0, a_DeadEnds.Length - 1);
-
-            while (l_TargetIndex == l_SourceIndex)
-            {
-                l_TargetIndex = m_Random.Next(0, a_DeadEnds.Length - 1);
-            }
-            LocateObject(Source, a_DeadEnds[l_SourceIndex]);
-            LocateObject(Target, a_DeadEnds[l_TargetIndex]);
+            Vector2Int[] l_DeadEnds = a_GridGraph.GetDeadEnds().ToArray();
+            var l_SourceIndex = m_Random.Next(0, l_DeadEnds.Length - 1);
+            
+            var l_OtherDeadEnds = a_GridGraph.FindDeadEndsFrom(l_DeadEnds[l_SourceIndex]).OrderBy((x) => x.Item2);
+            var l_Count = l_OtherDeadEnds.Count();
+            int l_TargetIndex = m_Random.Next(l_Count / 2, l_Count - 1);
+            var l_Target = l_OtherDeadEnds.ElementAt(l_TargetIndex).Item1;
+            
+            LocateObject(Source, l_DeadEnds[l_SourceIndex]);
+            LocateObject(Target, l_Target);
         }
         private void LocateObject(GameObject a_Object, Vector2Int vec)
         {

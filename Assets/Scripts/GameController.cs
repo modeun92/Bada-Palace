@@ -13,8 +13,8 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameTotalEventManager.Instance.OnGameStarted += () => { PlayMazeGame(); };
-        GameTotalEventManager.Instance.OnGameWinning += () => { AwardPrize(); };
+        Level = ConfigManager.Prog.CurrentProgress.Level;
+        Stage = ConfigManager.Prog.CurrentProgress.Stage;
     }
     // Update is called once per frame
     void Update()
@@ -24,7 +24,9 @@ public class GameController : MonoBehaviour
 
     public void GoToNextStage()
     {
-        ConfigManager.Setting.ProgressCorrespondent.IncreaseRecordStage();
+        ConfigManager.Prog.IncreaseStage();
+        Level = ConfigManager.Prog.CurrentProgress.Level;
+        Stage = ConfigManager.Prog.CurrentProgress.Stage;
     }
     public void PlayMazeGame()
     {

@@ -14,14 +14,26 @@ namespace Assets.Scripts.Global
                 {
                     if (_instance == null) { _instance = new ConfigManager(); }
                 }
-                return _instance.m_SettingInterface;
+                return _instance.m_ConfigCorrespondent;
+            }
+        }
+        public static GameProgressCorrespondent Prog
+        {
+            get
+            {
+                lock (_locker)
+                {
+                    if (_instance == null) { _instance = new ConfigManager(); }
+                }
+                return _instance.m_ProgressCorrespondent;
             }
         }
 
         private static ConfigManager _instance;
         private static object _locker = new object();
 
-        private GameConfigCorrespondent m_SettingInterface;
+        private GameConfigCorrespondent m_ConfigCorrespondent;
+        private GameProgressCorrespondent m_ProgressCorrespondent;
         private GameConfig m_Setting;
         private ConfigManager()
         {
@@ -41,8 +53,8 @@ namespace Assets.Scripts.Global
             Debug.Log("LoadSetting...");
             if (PlayerPrefs.HasKey(CONFIG))
             {
-                Debug.Log("CONFIG exists in PlayerPrefs.");
                 var l_JsonString = PlayerPrefs.GetString(CONFIG);
+                Debug.Log($"CONFIG exists in PlayerPrefs.\n{l_JsonString}");
                 m_Setting = JsonUtility.FromJson<GameConfig>(l_JsonString);
             }
             else
@@ -50,7 +62,9 @@ namespace Assets.Scripts.Global
                 Debug.Log("CONFIG doesn't exist in PlayerPrefs.");
                 Reset();
             }
-            m_SettingInterface = new GameConfigCorrespondent(m_Setting, SaveSetting);
+            m_ConfigCorrespondent = new GameConfigCorrespondent(ref m_Setting, SaveSetting);
+            m_ProgressCorrespondent = new GameProgressCorrespondent(
+                ref m_Setting.CurrentProgress, ref m_Setting.RecordProgress, ref m_Setting.MaximumProgress, SaveSetting);
             Debug.Log("LoadSetting done.");
         }
         private void Reset()
@@ -59,7 +73,7 @@ namespace Assets.Scripts.Global
             m_Setting.CurrentProgress = new GameProgress();
             m_Setting.RecordProgress = new GameProgress();
             SaveSetting();
-            m_SettingInterface = new GameConfigCorrespondent(m_Setting, SaveSetting);
+            m_ConfigCorrespondent = new GameConfigCorrespondent(ref m_Setting, SaveSetting);
         }
     }
 }

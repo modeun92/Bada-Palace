@@ -13,10 +13,10 @@ namespace Assets.Scripts.BasicClasses
             m_Source = new Vector2Int(x1, y1);
             m_Target = new Vector2Int(x2, y2);
         }
-        public NodeLink(Vector2Int v1, Vector2Int v2)
+        public NodeLink(Vector2Int a_Source, Vector2Int a_Target)
         {
-            m_Source = v1;
-            m_Target = v2;
+            m_Source = a_Source;
+            m_Target = a_Target;
         }
         private Vector2Int m_Source;
         private Vector2Int m_Target;
