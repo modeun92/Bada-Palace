@@ -27,7 +27,6 @@ public class GameProgressUpdater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
     public void LevelDown()
     {

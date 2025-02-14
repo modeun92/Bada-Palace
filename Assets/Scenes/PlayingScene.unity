@@ -1749,10 +1749,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582481}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ActivateConfig
-        m_Mode: 6
+      - m_Target: {fileID: 998007323}
+        m_TargetAssemblyTypeName: GameProgressUpdater, Assembly-CSharp
+        m_MethodName: StageUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3026,7 +3026,7 @@ RectTransform:
   m_GameObject: {fileID: 1298178560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1186288758}
@@ -3743,9 +3743,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582485}
-        m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
-        m_MethodName: TellToResume
+      - m_Target: {fileID: 1180582481}
+        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
+        m_MethodName: CloseConfigPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4657,10 +4657,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180582481}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ActivateConfig
-        m_Mode: 6
+      - m_Target: {fileID: 998007323}
+        m_TargetAssemblyTypeName: GameProgressUpdater, Assembly-CSharp
+        m_MethodName: StageDown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6247,10 +6247,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1180582485}
+        m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
+        m_MethodName: TellToStop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1180582481}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ActivateConfig
-        m_Mode: 6
+        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
+        m_MethodName: OpenConfigPanel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6777,7 +6789,7 @@ PrefabInstance:
     - target: {fileID: 1122409573684967300, guid: ee53cb7253d918341946fbb93fd20349,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39092.074
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1122409573684967300, guid: ee53cb7253d918341946fbb93fd20349,
         type: 3}

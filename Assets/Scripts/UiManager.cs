@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
@@ -39,7 +37,11 @@ public class UiManager : MonoBehaviour
     }
     public void OpenConfigPanel()
     {
-        ActivateOnlyThisPanel(PanelType.ConfigPanel);
+        ConfigPanel.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
+    }
+    public void CloseConfigPanel()
+    {
+        ConfigPanel.GetComponent<Transform>().localScale = new Vector3(0f, 1f, 1f);
     }
     private void ActivateOnlyThisPanel(PanelType aPanelType)
     {
