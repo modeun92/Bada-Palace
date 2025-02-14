@@ -1,5 +1,5 @@
 ﻿using System;
-
+using UnityEngine;
 namespace Assets.Scripts.Global
 {
     public class GameProgressCorrespondent
@@ -117,6 +117,14 @@ namespace Assets.Scripts.Global
             if (m_IsLevelUpable)
             {
                 m_CurrentProgress.Level++;
+                if (m_CurrentProgress.Level == m_RecordProgress.Level)
+                {
+                    if (m_CurrentProgress.Stage > m_RecordProgress.Stage)
+                    {
+                        m_CurrentProgress.Stage = m_RecordProgress.Stage;
+                    }
+
+                }
                 ApplyAndReturn(out a_IsLevelDownable, out a_IsLevelUpable,
                     out a_IsStageDownable, out a_IsStageUpable);
             }
@@ -155,7 +163,7 @@ namespace Assets.Scripts.Global
             if (m_IsStageUpable)
             {
                 m_CurrentProgress.Stage++;
-                if (m_CurrentProgress.Stage == m_MaximumProgress.Stage)
+                if (m_CurrentProgress.Stage > m_MaximumProgress.Stage)
                 {
                     m_CurrentProgress.Level++;
                     m_CurrentProgress.Stage = 1;
@@ -192,38 +200,50 @@ namespace Assets.Scripts.Global
             out bool a_IsLevelDownable, out bool a_IsLevelUpable,
             out bool a_IsStageDownable, out bool a_IsStageUpable)
         {
-            a_IsLevelDownable = false;
-            a_IsLevelUpable = false;
-            a_IsStageDownable = false;
-            a_IsStageUpable = false;
+            GetControllerState();
+            Return(out a_IsLevelDownable, out a_IsLevelUpable, out a_IsStageDownable, out a_IsStageUpable);
+        }
+        private void GetControllerState()
+        {
+            m_IsLevelDownable = false;
+            m_IsLevelUpable = false;
+            m_IsStageDownable = false;
+            m_IsStageUpable = false;
 
             if (m_RecordProgress.Level > 1) // LEVEL Upable, Downable or Bidir
             {
                 if (m_CurrentProgress.Level == m_RecordProgress.Level) // LEVEL Downable 10??
                 {
-                    a_IsLevelDownable = true;                                       //O   X   ?   ?
-                                                 // + StageDownable 101?
-                    a_IsStageDownable = true;                                       //O   X   O   ?
+                    m_IsLevelDownable = true;                                       //O   X   ?   ?
+                    Debug.Log("m_IsLevelDownable = true");
+                    // + StageDownable 101?
+                    m_IsStageDownable = true;                                       //O   X   O   ?
+                    Debug.Log("m_IsStageDownable = true");
                     if (m_CurrentProgress.Stage < m_RecordProgress.Stage)
                     {
-                        a_IsStageUpable = true;                                     //O   X   O   O//
+                        m_IsStageUpable = true;                                     //O   X   O   O//
+                        Debug.Log("m_IsStageUpable = true");
                     }// else //1010                                                 //O   X   O   X//
                 }
                 else //current.Level < record.Level
                 {
-                    a_IsLevelUpable = true;       //?   O   ?   ?
+                    m_IsLevelUpable = true;       //?   O   ?   ?
+                    Debug.Log("m_IsLevelUpable = true");
+                    m_IsStageUpable = true; //01?1                              //?   O   ?   O
+                    Debug.Log("m_IsStageUpable = true");
                     if (m_CurrentProgress.Level > 1)  //1 < current.Level < record.Level // LEVEL Bidir //current.Level > record.Level
                     {
-                        a_IsLevelDownable = true;                                   //O   O   ?   ?
-                        a_IsStageDownable = true;
-                        a_IsStageUpable = true;                                     //O   O   O   O//
+                        m_IsLevelDownable = true;                                   //O   O   ?   ?
+                        m_IsStageDownable = true;
+                        Debug.Log("m_IsLevelDownable = true");
+                        Debug.Log("m_IsStageDownable = true");
                     }
                     else //current.Level == 1 && current.Level < record.Level LEVEL Bidir
                     {
-                        a_IsStageUpable = true; //01?1                              //X   O   ?   O
                         if (m_CurrentProgress.Stage > 1)
                         {
-                            a_IsStageDownable = true; //0111                        //X   O   O   O//
+                            m_IsStageDownable = true; //0111                        //X   O   O   O//
+                            Debug.Log("m_IsStageDownable = true");
                         }//else                                                     //X   O   X   O//
                     }
                 }
@@ -234,19 +254,24 @@ namespace Assets.Scripts.Global
                 {
                     if (m_CurrentProgress.Stage == 1) // StageUpable 0001
                     {
-                        a_IsStageUpable = true;                                     //X   X   X   O//
+                        m_IsStageUpable = true;                                     //X   X   X   O//
+                        Debug.Log("m_IsStageUpable = true");
                     }
                     else
                     {
-                        a_IsStageDownable = true; //+StageBidir                     //X   X   O   ?
+                        m_IsStageDownable = true; //+StageBidir                     //X   X   O   ?
+                        Debug.Log("m_IsStageDownable = true");
 
                         if (m_CurrentProgress.Stage < m_RecordProgress.Stage) // StageBidir 0011
                         {
-                            a_IsStageUpable = true;                                 //X   X   O   O//
+                            m_IsStageUpable = true;                                 //X   X   O   O//
+                            Debug.Log("m_IsStageUpable = true");
                         }//else                                                     //X   X   O   X//
                     }
                 }//else                                                             //X   X   X   X//
             }
+
+            Debug.Log($"LD: {m_IsLevelDownable}, LU: {m_IsLevelUpable}, SD: {m_IsStageDownable}, SU: {m_IsStageUpable}");
         }
         private void Return(
             out bool a_IsLevelDownable, out bool a_IsLevelUpable,
@@ -262,7 +287,7 @@ namespace Assets.Scripts.Global
             out bool a_IsStageDownable, out bool a_IsStageUpable)
         {
             m_OnChanged();
-            GetControllerState(out m_IsLevelDownable, out m_IsLevelUpable, out m_IsStageDownable, out m_IsStageUpable);
+            GetControllerState();
             Return(out a_IsLevelDownable, out a_IsLevelUpable, out a_IsStageDownable, out a_IsStageUpable);
         }
     }

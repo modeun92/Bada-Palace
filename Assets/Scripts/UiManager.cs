@@ -27,15 +27,19 @@ public class UiManager : MonoBehaviour
     }
     public void OpenWinningPanel()
     {
-        ActivateOnlyThisPanel(PanelType.WINNING_PANEL);
+        ActivateOnlyThisPanel(PanelType.WinningPanel);
     }
     public void OpenPlayingPanel()
     {
-        ActivateOnlyThisPanel(PanelType.PLAYING_PANEL);
+        ActivateOnlyThisPanel(PanelType.PlayingPanel);
     }
     public void OpenPausingPanel()
     {
-        ActivateOnlyThisPanel(PanelType.PAUSE_PANEL);
+        ActivateOnlyThisPanel(PanelType.PausingPanel);
+    }
+    public void OpenConfigPanel()
+    {
+        ActivateOnlyThisPanel(PanelType.ConfigPanel);
     }
     private void ActivateOnlyThisPanel(PanelType aPanelType)
     {
@@ -49,4 +53,4 @@ public class UiManager : MonoBehaviour
         Debug.Log("SCREEN done");
     }
 }
-public enum PanelType { PLAYING_PANEL, PAUSE_PANEL, LOSING_PANEL, WINNING_PANEL, CONFIG_PANEL, ADMIN_PANEL, NONE }
+public enum PanelType { PlayingPanel, PausingPanel, LosingPanel, WinningPanel, ConfigPanel, AdminPanel, NONE }
