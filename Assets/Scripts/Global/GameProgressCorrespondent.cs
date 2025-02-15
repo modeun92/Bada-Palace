@@ -4,10 +4,10 @@ namespace Assets.Scripts.Global
 {
     public class GameProgressCorrespondent
     {
-        private GameProgress m_CurrentProgress, m_RecordProgress, m_MaximumProgress;
+        private GameProgress m_TemporaryProgress, m_CurrentProgress, m_RecordProgress, m_MaximumProgress;
         private Action m_OnChanged;
         private object locker = new object();
-        private bool m_IsLevelUpable, m_IsLevelDownable, m_IsStageUpable, m_IsStageDownable;
+        private bool m_IsSimulLevelUpable, m_IsSimulLevelDownable, m_IsSimulStageUpable, m_IsSimulStageDownable;
         public GameProgress CurrentProgress
         {
             get
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Global
             {
                 lock (locker)
                 {
-                    if (CompareCurrentToRecord() is CompareType.Bigger)
+                    if (Compare(m_CurrentProgress, m_RecordProgress) is CompareType.Bigger)
                     {
                         m_CurrentProgress = m_RecordProgress;
                         return;
@@ -28,20 +28,9 @@ namespace Assets.Scripts.Global
                 }
             }
         }
-        public GameProgress RecordProgress
-        {
-            get
-            {
-                lock (locker) { return Clone(m_RecordProgress); }
-            }
-        }
-        public GameProgress MaximumProgress
-        {
-            get
-            {
-                lock (locker) { return Clone(m_MaximumProgress); }
-            }
-        }
+        public GameProgress SimulationProgress { get { lock (locker) { return Clone(m_TemporaryProgress); } } }
+        public GameProgress RecordProgress { get { lock (locker) { return Clone(m_RecordProgress); } } }
+        public GameProgress MaximumProgress { get { lock (locker) { return Clone(m_MaximumProgress); } } }
         private GameProgress Clone(GameProgress a_Original)
         {
             var l_Clone = new GameProgress()
@@ -58,50 +47,49 @@ namespace Assets.Scripts.Global
             m_CurrentProgress = a_CurrentProgress;
             m_RecordProgress = a_RecordProgress;
             m_MaximumProgress = a_MaximumProgress;
+            m_TemporaryProgress = new GameProgress() { 
+                Level = m_CurrentProgress.Level, 
+                Stage = m_CurrentProgress.Stage };
             m_OnChanged = a_OnChanged;
         }
         public void IncreaseStage()
         {
             lock (locker)
             {
-                CompareType l_Compared = CompareCurrentToRecord();
-                if (l_Compared == CompareType.Same)
+                CompareType l_Compared = Compare(m_CurrentProgress, m_RecordProgress);
+                if (l_Compared is CompareType.Same)
                 {
-                    m_RecordProgress.Stage++;
-                    if (m_RecordProgress.Level < m_MaximumProgress.Level)
-                    {
-                        if (m_RecordProgress.Stage > m_MaximumProgress.Stage)
-                        {
-                            m_RecordProgress.Stage = 1;
-                            m_RecordProgress.Level++;
-                        }
-                    }
+                    IncreaseStage(ref m_RecordProgress);
                     m_CurrentProgress.Level = m_RecordProgress.Level;
                     m_CurrentProgress.Stage = m_RecordProgress.Stage;
                 }
                 else
                 {
-                    m_CurrentProgress.Stage++;
-                    if (m_CurrentProgress.Level < m_MaximumProgress.Level)
-                    {
-                        if (m_CurrentProgress.Stage == m_MaximumProgress.Stage)
-                        {
-                            m_CurrentProgress.Level++;
-                            m_CurrentProgress.Stage = 1;
-                        }
-                    }
+                    IncreaseStage(ref m_CurrentProgress);
                 }
                 m_OnChanged();
             }
         }
-        public void LevelDown(
+        private void IncreaseStage(ref GameProgress a_Progress)
+        {
+            a_Progress.Stage++;
+            if (a_Progress.Level < m_MaximumProgress.Level)
+            {
+                if (a_Progress.Stage == m_MaximumProgress.Stage)
+                {
+                    a_Progress.Level++;
+                    a_Progress.Stage = 1;
+                }
+            }
+        }
+        public void SimulateLevelDown(
             out bool a_IsLevelDownable, out bool a_IsLevelUpable,
             out bool a_IsStageDownable, out bool a_IsStageUpable)
         {
-            if (m_IsLevelDownable)
+            if (m_IsSimulLevelDownable)
             {
-                m_CurrentProgress.Level--;
-                ApplyAndReturn(out a_IsLevelDownable, out a_IsLevelUpable,
+                m_TemporaryProgress.Level--;
+                GetSimulateionState(out a_IsLevelDownable, out a_IsLevelUpable,
                     out a_IsStageDownable, out a_IsStageUpable);
             }
             else
@@ -110,22 +98,22 @@ namespace Assets.Scripts.Global
                     out a_IsStageDownable, out a_IsStageUpable);
             }
         }
-        public void LevelUp(
+        public void SimulateLevelUp(
             out bool a_IsLevelDownable, out bool a_IsLevelUpable,
             out bool a_IsStageDownable, out bool a_IsStageUpable)
         {
-            if (m_IsLevelUpable)
+            if (m_IsSimulLevelUpable)
             {
-                m_CurrentProgress.Level++;
-                if (m_CurrentProgress.Level == m_RecordProgress.Level)
+                m_TemporaryProgress.Level++;
+                if (m_TemporaryProgress.Level == m_RecordProgress.Level)
                 {
-                    if (m_CurrentProgress.Stage > m_RecordProgress.Stage)
+                    if (m_TemporaryProgress.Stage > m_RecordProgress.Stage)
                     {
-                        m_CurrentProgress.Stage = m_RecordProgress.Stage;
+                        m_TemporaryProgress.Stage = m_RecordProgress.Stage;
                     }
 
                 }
-                ApplyAndReturn(out a_IsLevelDownable, out a_IsLevelUpable,
+                GetSimulateionState(out a_IsLevelDownable, out a_IsLevelUpable,
                     out a_IsStageDownable, out a_IsStageUpable);
             }
             else
@@ -134,20 +122,20 @@ namespace Assets.Scripts.Global
                     out a_IsStageDownable, out a_IsStageUpable);
             }
         }
-        public void StageDown(
+        public void SimulateStageDown(
             out bool a_IsLevelDownable, out bool a_IsLevelUpable,
             out bool a_IsStageDownable, out bool a_IsStageUpable)
         {
-            if (m_IsStageDownable)
+            if (m_IsSimulStageDownable)
             {
-                m_CurrentProgress.Stage--;
+                m_TemporaryProgress.Stage--;
 
-                if (m_CurrentProgress.Stage == 0)
+                if (m_TemporaryProgress.Stage == 0)
                 {
-                    m_CurrentProgress.Level--;
-                    m_CurrentProgress.Stage = m_MaximumProgress.Stage;
+                    m_TemporaryProgress.Level--;
+                    m_TemporaryProgress.Stage = m_MaximumProgress.Stage;
                 }
-                ApplyAndReturn(out a_IsLevelDownable, out a_IsLevelUpable,
+                GetSimulateionState(out a_IsLevelDownable, out a_IsLevelUpable,
                     out a_IsStageDownable, out a_IsStageUpable);
             }
             else
@@ -156,19 +144,19 @@ namespace Assets.Scripts.Global
                     out a_IsStageDownable, out a_IsStageUpable);
             }
         }
-        public void StageUp(
+        public void SimulateStageUp(
             out bool a_IsLevelDownable, out bool a_IsLevelUpable,
             out bool a_IsStageDownable, out bool a_IsStageUpable)
         {
-            if (m_IsStageUpable)
+            if (m_IsSimulStageUpable)
             {
-                m_CurrentProgress.Stage++;
-                if (m_CurrentProgress.Stage > m_MaximumProgress.Stage)
+                m_TemporaryProgress.Stage++;
+                if (m_TemporaryProgress.Stage > m_MaximumProgress.Stage)
                 {
-                    m_CurrentProgress.Level++;
-                    m_CurrentProgress.Stage = 1;
+                    m_TemporaryProgress.Level++;
+                    m_TemporaryProgress.Stage = 1;
                 }
-                ApplyAndReturn(out a_IsLevelDownable, out a_IsLevelUpable,
+                GetSimulateionState(out a_IsLevelDownable, out a_IsLevelUpable,
                     out a_IsStageDownable, out a_IsStageUpable);
             }
             else
@@ -177,72 +165,83 @@ namespace Assets.Scripts.Global
                     out a_IsStageDownable, out a_IsStageUpable);
             }
         }
-        private CompareType CompareCurrentToRecord()
+        public bool ApplySimulation()
         {
-            if (m_CurrentProgress.Level > m_RecordProgress.Level)
+            if (Compare(m_TemporaryProgress, m_CurrentProgress) is not CompareType.Same)
+            {
+                m_CurrentProgress.Level = m_TemporaryProgress.Level;
+                m_CurrentProgress.Stage = m_TemporaryProgress.Stage;
+                m_OnChanged();
+                return true;
+            }
+            return false;
+        }
+        private CompareType Compare(GameProgress a, GameProgress b)
+        {
+            if (a.Level > b.Level)
             {
                 return CompareType.Bigger;
             }
-            else if (m_CurrentProgress.Level == m_RecordProgress.Level)
+            else if (a.Level == b.Level)
             {
-                if (m_CurrentProgress.Stage > m_RecordProgress.Stage)
+                if (a.Stage > b.Stage)
                 {
                     return CompareType.Bigger;
                 }
-                else if (m_CurrentProgress.Stage == m_RecordProgress.Stage)
+                else if (a.Stage == b.Stage)
                 {
                     return CompareType.Same;
                 }
             }
             return CompareType.Smaller;
         }
-        public void GetControllerState(
+        public void GetSimulateionState(
             out bool a_IsLevelDownable, out bool a_IsLevelUpable,
             out bool a_IsStageDownable, out bool a_IsStageUpable)
         {
-            GetControllerState();
+            GetSimulateionState();
             Return(out a_IsLevelDownable, out a_IsLevelUpable, out a_IsStageDownable, out a_IsStageUpable);
         }
-        private void GetControllerState()
+        private void GetSimulateionState()
         {
-            m_IsLevelDownable = false;
-            m_IsLevelUpable = false;
-            m_IsStageDownable = false;
-            m_IsStageUpable = false;
+            m_IsSimulLevelDownable = false;
+            m_IsSimulLevelUpable = false;
+            m_IsSimulStageDownable = false;
+            m_IsSimulStageUpable = false;
 
             if (m_RecordProgress.Level > 1) // LEVEL Upable, Downable or Bidir
             {
-                if (m_CurrentProgress.Level == m_RecordProgress.Level) // LEVEL Downable 10??
+                if (m_TemporaryProgress.Level == m_RecordProgress.Level) // LEVEL Downable 10??
                 {
-                    m_IsLevelDownable = true;                                       //O   X   ?   ?
+                    m_IsSimulLevelDownable = true;                                       //O   X   ?   ?
                     Debug.Log("m_IsLevelDownable = true");
                     // + StageDownable 101?
-                    m_IsStageDownable = true;                                       //O   X   O   ?
+                    m_IsSimulStageDownable = true;                                       //O   X   O   ?
                     Debug.Log("m_IsStageDownable = true");
-                    if (m_CurrentProgress.Stage < m_RecordProgress.Stage)
+                    if (m_TemporaryProgress.Stage < m_RecordProgress.Stage)
                     {
-                        m_IsStageUpable = true;                                     //O   X   O   O//
+                        m_IsSimulStageUpable = true;                                     //O   X   O   O//
                         Debug.Log("m_IsStageUpable = true");
                     }// else //1010                                                 //O   X   O   X//
                 }
                 else //current.Level < record.Level
                 {
-                    m_IsLevelUpable = true;       //?   O   ?   ?
+                    m_IsSimulLevelUpable = true;       //?   O   ?   ?
                     Debug.Log("m_IsLevelUpable = true");
-                    m_IsStageUpable = true; //01?1                              //?   O   ?   O
+                    m_IsSimulStageUpable = true; //01?1                              //?   O   ?   O
                     Debug.Log("m_IsStageUpable = true");
-                    if (m_CurrentProgress.Level > 1)  //1 < current.Level < record.Level // LEVEL Bidir //current.Level > record.Level
+                    if (m_TemporaryProgress.Level > 1)  //1 < current.Level < record.Level // LEVEL Bidir //current.Level > record.Level
                     {
-                        m_IsLevelDownable = true;                                   //O   O   ?   ?
-                        m_IsStageDownable = true;
+                        m_IsSimulLevelDownable = true;                                   //O   O   ?   ?
+                        m_IsSimulStageDownable = true;
                         Debug.Log("m_IsLevelDownable = true");
                         Debug.Log("m_IsStageDownable = true");
                     }
                     else //current.Level == 1 && current.Level < record.Level LEVEL Bidir
                     {
-                        if (m_CurrentProgress.Stage > 1)
+                        if (m_TemporaryProgress.Stage > 1)
                         {
-                            m_IsStageDownable = true; //0111                        //X   O   O   O//
+                            m_IsSimulStageDownable = true; //0111                        //X   O   O   O//
                             Debug.Log("m_IsStageDownable = true");
                         }//else                                                     //X   O   X   O//
                     }
@@ -252,43 +251,35 @@ namespace Assets.Scripts.Global
             {
                 if (m_RecordProgress.Stage > 1) //record.Stage > 1 00??
                 {
-                    if (m_CurrentProgress.Stage == 1) // StageUpable 0001
+                    if (m_TemporaryProgress.Stage == 1) // StageUpable 0001
                     {
-                        m_IsStageUpable = true;                                     //X   X   X   O//
+                        m_IsSimulStageUpable = true;                                     //X   X   X   O//
                         Debug.Log("m_IsStageUpable = true");
                     }
                     else
                     {
-                        m_IsStageDownable = true; //+StageBidir                     //X   X   O   ?
+                        m_IsSimulStageDownable = true; //+StageBidir                     //X   X   O   ?
                         Debug.Log("m_IsStageDownable = true");
 
-                        if (m_CurrentProgress.Stage < m_RecordProgress.Stage) // StageBidir 0011
+                        if (m_TemporaryProgress.Stage < m_RecordProgress.Stage) // StageBidir 0011
                         {
-                            m_IsStageUpable = true;                                 //X   X   O   O//
+                            m_IsSimulStageUpable = true;                                 //X   X   O   O//
                             Debug.Log("m_IsStageUpable = true");
                         }//else                                                     //X   X   O   X//
                     }
                 }//else                                                             //X   X   X   X//
             }
 
-            Debug.Log($"LD: {m_IsLevelDownable}, LU: {m_IsLevelUpable}, SD: {m_IsStageDownable}, SU: {m_IsStageUpable}");
+            Debug.Log($"LD: {m_IsSimulLevelDownable}, LU: {m_IsSimulLevelUpable}, SD: {m_IsSimulStageDownable}, SU: {m_IsSimulStageUpable}");
         }
         private void Return(
             out bool a_IsLevelDownable, out bool a_IsLevelUpable,
             out bool a_IsStageDownable, out bool a_IsStageUpable)
         {
-            a_IsLevelDownable = m_IsLevelDownable;
-            a_IsLevelUpable = m_IsLevelUpable;
-            a_IsStageDownable = m_IsStageDownable;
-            a_IsStageUpable = m_IsStageUpable;
-        }
-        private void ApplyAndReturn(
-            out bool a_IsLevelDownable, out bool a_IsLevelUpable,
-            out bool a_IsStageDownable, out bool a_IsStageUpable)
-        {
-            m_OnChanged();
-            GetControllerState();
-            Return(out a_IsLevelDownable, out a_IsLevelUpable, out a_IsStageDownable, out a_IsStageUpable);
+            a_IsLevelDownable = m_IsSimulLevelDownable;
+            a_IsLevelUpable = m_IsSimulLevelUpable;
+            a_IsStageDownable = m_IsSimulStageDownable;
+            a_IsStageUpable = m_IsSimulStageUpable;
         }
     }
 }

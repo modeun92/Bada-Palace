@@ -59,6 +59,6 @@ namespace Assets.Scripts.Global
         private GameConfig m_Setting;
         private object locker = new object();
     }
-    internal enum CompareType { Smaller = -1, Same = 0, Bigger = 1 }
+    public enum CompareType { Smaller = -1, Same = 0, Bigger = 1 }
     public enum ProfitReason { GameWon, Event, SELLING, BUYING }
 }

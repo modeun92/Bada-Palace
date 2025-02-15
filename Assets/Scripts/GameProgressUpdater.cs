@@ -1,9 +1,13 @@
 ﻿using Assets.Scripts.Global;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 public class GameProgressUpdater : MonoBehaviour
 {
+    [SerializeField]
+    private UnityEvent OnChanged;
+
     public Button LevelDownButton;
     public Button LevelUpButton;
     public TextMeshProUGUI LevelText;
@@ -18,20 +22,24 @@ public class GameProgressUpdater : MonoBehaviour
     {
         Debug.Log("level:" + ConfigManager.Prog.CurrentProgress.Level + 
             ",stage:"+ ConfigManager.Prog.CurrentProgress.Stage);
-        ConfigManager.Prog.GetControllerState(
-            out m_IsLevelDownable, out m_IsLevelUpable,
-            out m_IsStageDownable, out m_IsStageUpable);
-        UiUpdate();
+        UpdateUI();
     }
 
     // Update is called once per frame
     void Update()
     {
     }
+    public void CheckIsChanged()
+    {
+        if (ConfigManager.Prog.ApplySimulation())
+        {
+            OnChanged.Invoke();
+        }
+    }
     public void LevelDown()
     {
         Debug.Log("LevelDown");
-        ConfigManager.Prog.LevelDown(
+        ConfigManager.Prog.SimulateLevelDown(
             out m_IsLevelDownable, out m_IsLevelUpable,
             out m_IsStageDownable, out m_IsStageUpable);
         UiUpdate();
@@ -39,7 +47,7 @@ public class GameProgressUpdater : MonoBehaviour
     public void LevelUp()
     {
         Debug.Log("LevelUp");
-        ConfigManager.Prog.LevelUp(
+        ConfigManager.Prog.SimulateLevelUp(
             out m_IsLevelDownable, out m_IsLevelUpable,
             out m_IsStageDownable, out m_IsStageUpable);
         UiUpdate();
@@ -47,7 +55,7 @@ public class GameProgressUpdater : MonoBehaviour
     public void StageDown()
     {
         Debug.Log("StageDown");
-        ConfigManager.Prog.StageDown(
+        ConfigManager.Prog.SimulateStageDown(
             out m_IsLevelDownable, out m_IsLevelUpable,
             out m_IsStageDownable, out m_IsStageUpable);
         UiUpdate();
@@ -55,7 +63,14 @@ public class GameProgressUpdater : MonoBehaviour
     public void StageUp()
     {
         Debug.Log("StageUp");
-        ConfigManager.Prog.StageUp(
+        ConfigManager.Prog.SimulateStageUp(
+            out m_IsLevelDownable, out m_IsLevelUpable,
+            out m_IsStageDownable, out m_IsStageUpable);
+        UiUpdate();
+    }
+    public void UpdateUI()
+    {
+        ConfigManager.Prog.GetSimulateionState(
             out m_IsLevelDownable, out m_IsLevelUpable,
             out m_IsStageDownable, out m_IsStageUpable);
         UiUpdate();
@@ -68,7 +83,7 @@ public class GameProgressUpdater : MonoBehaviour
         StageUpButton.interactable = m_IsStageUpable;
 
         Debug.Log($"LD: {m_IsLevelDownable}, LU: {m_IsLevelUpable}, SD: {m_IsStageDownable}, SU: {m_IsStageUpable}");
-        LevelText.text = ConfigManager.Prog.CurrentProgress.Level.ToString();
-        StageText.text = ConfigManager.Prog.CurrentProgress.Stage.ToString();
+        LevelText.text = ConfigManager.Prog.SimulationProgress.Level.ToString();
+        StageText.text = ConfigManager.Prog.SimulationProgress.Stage.ToString();
     }
 }

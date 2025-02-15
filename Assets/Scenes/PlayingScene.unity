@@ -2271,19 +2271,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1180582485}
         m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
-        m_MethodName: TellToStop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1180582481}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: OpenConfigPanel
+        m_MethodName: TellToConfig
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2725,6 +2713,33 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Target, Assembly-CSharp
         m_MethodName: SetArrivable
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnConfiguring:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180582481}
+        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
+        m_MethodName: OpenConfigPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 998007323}
+        m_TargetAssemblyTypeName: GameProgressUpdater, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5444,7 +5459,7 @@ GameObject:
   - component: {fileID: 1858544075}
   - component: {fileID: 1858544076}
   m_Layer: 10
-  m_Name: LosingPanel
+  m_Name: ShopPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6249,19 +6264,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1180582485}
         m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
-        m_MethodName: TellToStop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1180582481}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: OpenConfigPanel
+        m_MethodName: TellToConfig
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

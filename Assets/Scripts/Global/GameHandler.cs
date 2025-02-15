@@ -16,6 +16,8 @@ public class GameHandler : MonoBehaviour
     private UnityEvent OnResuming;
     [SerializeField]
     private UnityEvent OnStopping;
+    [SerializeField]
+    private UnityEvent OnConfiguring;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +44,10 @@ public class GameHandler : MonoBehaviour
     public void TellToStop()
     {
         OnStopping.Invoke();
+    }
+    public void TellToConfig()
+    {
+        OnConfiguring.Invoke();
     }
     public void TellToPause()
     {
