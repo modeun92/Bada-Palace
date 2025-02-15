@@ -1840,7 +1840,7 @@ RectTransform:
   m_GameObject: {fileID: 998007319}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1474494589}
@@ -1903,6 +1903,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7324d1906c3be4c93f93c4c49a51a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180582485}
+        m_TargetAssemblyTypeName: GameHandler, Assembly-CSharp
+        m_MethodName: TellToPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   LevelDownButton: {fileID: 455618170}
   LevelUpButton: {fileID: 1558418656}
   LevelText: {fileID: 344657293}
@@ -3758,6 +3773,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 998007323}
+        m_TargetAssemblyTypeName: GameProgressUpdater, Assembly-CSharp
+        m_MethodName: CheckIsChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1180582481}
         m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
         m_MethodName: CloseConfigPanel
