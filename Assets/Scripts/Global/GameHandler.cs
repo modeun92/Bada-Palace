@@ -1,64 +1,65 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameHandler : MonoBehaviour
+namespace Assets.Scripts.Global
 {
-    [SerializeField]
-    private UnityEvent OnWinning;
-    [SerializeField]
-    private UnityEvent OnPlaying;
-    [SerializeField]
-    private UnityEvent OnPausing;
-    [SerializeField]
-    private UnityEvent OnResuming;
-    [SerializeField]
-    private UnityEvent OnStopping;
-    [SerializeField]
-    private UnityEvent OnConfiguring;
-    // Start is called before the first frame update
-    void Start()
+    public class GameHandler : MonoBehaviour
     {
-        OnPlaying.Invoke();
-    }
+        [SerializeField]
+        private UnityEvent OnWinning;
+        [SerializeField]
+        private UnityEvent OnPlaying;
+        [SerializeField]
+        private UnityEvent OnPausing;
+        [SerializeField]
+        private UnityEvent OnResuming;
+        [SerializeField]
+        private UnityEvent OnStopping;
+        [SerializeField]
+        private UnityEvent OnConfiguring;
+        // Start is called before the first frame update
+        void Start()
+        {
+            OnPlaying.Invoke();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
 
+        }
+        public void TellToWin()
+        {
+            OnWinning.Invoke();
+        }
+        public void TellToPlay()
+        {
+            OnPlaying.Invoke();
+        }
+        public void TellToResume()
+        {
+            OnResuming.Invoke();
+        }
+        public void TellToStop()
+        {
+            OnStopping.Invoke();
+        }
+        public void TellToConfig()
+        {
+            OnConfiguring.Invoke();
+        }
+        public void TellToPause()
+        {
+            OnPausing.Invoke();
+        }
     }
-    public void TellToWin()
-    {
-        OnWinning.Invoke();
-    }
-    public void TellToPlay()
-    {
-        OnPlaying.Invoke();
-    }
-    public void TellToResume()
-    {
-        OnResuming.Invoke();
-    }
-    public void TellToStop()
-    {
-        OnStopping.Invoke();
-    }
-    public void TellToConfig()
-    {
-        OnConfiguring.Invoke();
-    }
-    public void TellToPause()
-    {
-        OnPausing.Invoke();
-    }
+    [Serializable]
+    public class OnWinning : UnityEvent { }
+    [Serializable]
+    public class OnPausing : UnityEvent { }
+    [Serializable]
+    public class OnPlaying : UnityEvent { }
+    [Serializable]
+    public class OnResuming : UnityEvent { }
 }
-[Serializable]
-public class OnWinning : UnityEvent { }
-[Serializable]
-public class OnPausing : UnityEvent { }
-[Serializable]
-public class OnPlaying : UnityEvent { }
-[Serializable]
-public class OnResuming : UnityEvent { }

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Global;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,10 +6,14 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public GameObject ItemForm;
-    public GameObject Content;
-    public TextMeshProUGUI GoldAmount;
+    [SerializeField]
+    private GameObject ItemForm;
+    [SerializeField]
+    private GameObject Content;
+    [SerializeField]
+    private TextMeshProUGUI GoldAmount;
 
+    private Dictionary<ItemType, GameObject> mItemLibrary;
     private RectTransform mContentTransform;
     private GridLayoutGroup mContentGridLayout;
     private Vector2 mCellSize;
@@ -18,7 +21,6 @@ public class InventoryManager : MonoBehaviour
     private float mContentDefaultWidth;
     private int mFitCount;
     private float mCellUnitWidth;
-    private Dictionary<ItemType, GameObject> mItemLibrary;
 
     private int mGoldAmount = 0;
     private int mItemCount = 0;
@@ -42,11 +44,13 @@ public class InventoryManager : MonoBehaviour
             if (!mIsInitialized)
             {
                 mItemLibrary = new Dictionary<ItemType, GameObject>();
+
                 mContentTransform = Content.GetComponent<RectTransform>();
                 mContentGridLayout = Content.GetComponent<GridLayoutGroup>();
+                mContentDefaultWidth = GetComponent<RectTransform>().rect.width;
+
                 mCellSize = mContentGridLayout.cellSize;
                 mSpacing = mContentGridLayout.spacing;
-                mContentDefaultWidth = GetComponent<RectTransform>().rect.width;
                 mContentTransform.sizeDelta = new Vector2(mContentDefaultWidth, mContentTransform.sizeDelta.y);
                 mCellUnitWidth = mCellSize.x + mSpacing.x;
                 mFitCount = (int)(mContentDefaultWidth / mCellUnitWidth);

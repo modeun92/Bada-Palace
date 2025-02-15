@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Maze;
-using System;
-using UnityEngine;
+﻿using System;
 
 namespace Assets.Scripts.Global
 {

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using Assets.Scripts.Maze;
-using System.Collections;
-using Assets.Scripts.BasicClasses;
+﻿using Assets.Scripts.BasicClasses;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Maze
 {
