@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Item;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -54,7 +55,7 @@ public class ItemList : MonoBehaviour
         Item lItem = GetItem(aItemType);
         if (lItem != null)
         {
-            lItem.Amount = aAmount;
+            //lItem.Amount = aAmount;
         }
         return lItem;
     }

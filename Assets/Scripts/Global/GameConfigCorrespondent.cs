@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace Assets.Scripts.Global
 {
     public class GameConfigCorrespondent
@@ -45,7 +44,7 @@ namespace Assets.Scripts.Global
                 m_OnChanged();
             }
         }
-        public Item[] Items //TO_FIX
+        public Item.Item[] Items //TO_FIX
         {
             get => m_Setting.Items;
             set { lock (locker) { m_Setting.Items = value; m_OnChanged(); } }

@@ -184,7 +184,7 @@ namespace Assets.Scripts.Maze
             {
                 for (int lColumnIndex = 0; lColumnIndex < lColumnLimit; lColumnIndex++)
                 {
-                    mTotalFixedObjects.Push(InstantiateWall(lColumnIndex, lRowIndex));
+                    mTotalFixedObjects.Push(InstantiateWall(lColumnIndex, lRowIndex, "fixed_wall"));
                 }
             }
         }
@@ -198,17 +198,17 @@ namespace Assets.Scripts.Maze
                     if (lRowIndex < aRowCount - 1)
                     {
                         var l_Link = new NodeLink(l_Source, l_Source + Vector2Int.up);
-                        mTotalVariableWalls.Add(l_Link, InstantiateWall(l_Link));
+                        mTotalVariableWalls.Add(l_Link, InstantiateWall(l_Link, "variable_wall"));
                     }
                     if (lColumnIndex < aColumnCount - 1)
                     {
                         var l_Link = new NodeLink(l_Source, l_Source + Vector2Int.right);
-                        mTotalVariableWalls.Add(l_Link, InstantiateWall(l_Link));
+                        mTotalVariableWalls.Add(l_Link, InstantiateWall(l_Link, "variable_wall"));
                     }
                 }
             }
         }
-        private GameObject InstantiateWall(NodeLink a_Link)
+        private GameObject InstantiateWall(NodeLink a_Link, string a_Type)
         {
             int l_ColumnLength = 1;
             int l_RowLength = 1;
@@ -223,9 +223,10 @@ namespace Assets.Scripts.Maze
             var instance = Instantiate(Wall, new Vector3(), Quaternion.identity, mOffsetTransform);
             instance.GetComponent<Transform>().localPosition = m_VariableWallTransform * GetMiddlePoint(a_Link);
             instance.GetComponent<WallManager>().SetSize(l_ColumnLength, l_RowLength);
+            instance.name = a_Type;
             return instance;
         }
-        private GameObject InstantiateWall(int x, int y)
+        private GameObject InstantiateWall(int x, int y, string a_Type)
         {
             Vector3 l_Vec = new Vector3(x, y, 1);
             int l_ColumnLength = 1;
@@ -233,6 +234,7 @@ namespace Assets.Scripts.Maze
             var instance = Instantiate(Wall, new Vector3(), Quaternion.identity, mOffsetTransform);
             instance.GetComponent<Transform>().localPosition = m_FixedWallTransform * l_Vec;
             instance.GetComponent<WallManager>().SetSize(l_ColumnLength, l_RowLength);
+            instance.name = a_Type;
             return instance;
         }
         private GameObject InstantiateWall(float aX, float aY, float aWidth, float aHeight)

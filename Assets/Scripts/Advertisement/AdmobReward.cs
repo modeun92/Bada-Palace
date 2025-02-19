@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using GoogleMobileAds.Api;
+using Assets.Scripts.Item;
 public class AdmobReward : MonoBehaviour
 {
     private RewardedAd rewarded;
@@ -36,9 +37,9 @@ public class AdmobReward : MonoBehaviour
         rewarded.OnAdLoaded += (sender, e) => { };
         rewarded.OnUserEarnedReward += (sender, e) =>
         {
-            var item = new Item();
-            item.Type = type;
-            TempSaving.RewardItem(item);
+            //var item = new Item();
+            //item.Type = type;
+            //TempSaving.RewardItem(item);
         };
         IsInitialized = true;
         Debug.Log("Rewarded ad Initialized.");

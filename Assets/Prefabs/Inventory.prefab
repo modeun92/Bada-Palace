@@ -120,8 +120,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1122409572316888896}
   m_HandleRect: {fileID: 1122409572316888903}
   m_Direction: 0
-  m_Value: -0.00000026240403
-  m_Size: 0.77196085
+  m_Value: -0.00000026240411
+  m_Size: 0.7719609
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 1122409573649504440}
   - component: {fileID: 1122409573649504436}
   - component: {fileID: 1122409573649504437}
+  - component: {fileID: 6737408119297477987}
   m_Layer: 10
   m_Name: Inventory
   m_TagString: Untagged
@@ -507,6 +508,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openingUnit: 0.05
+--- !u!114 &6737408119297477987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122409573649504446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e43a23d55d319548869036e0990f54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items:
+  - Type: 0
+    Price: 0
+    Amount: 0
+    Image: {fileID: 0}
 --- !u!1 &1122409573684967307
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,5 @@
-﻿using System;
-
+﻿using Assets.Scripts.Item;
+using System;
 namespace Assets.Scripts.Global
 {
     [Serializable]
@@ -15,7 +15,7 @@ namespace Assets.Scripts.Global
 
         public int ProfitPerEvent = 5;
 
-        public Item[] Items = null;
+        public ItemToOwn[] Items = null;
         public GameProgress CurrentProgress = new GameProgress();
         public GameProgress RecordProgress = new GameProgress();
         public GameProgress ProfitScaleProgress = new GameProgress() { Level = 3, Stage = 7 };

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Global;
+using Assets.Scripts.Item;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class InventoryManager : MonoBehaviour
     private GameObject Content;
     [SerializeField]
     private TextMeshProUGUI GoldAmount;
+    [SerializeField]
+    private ItemDirector ItemDirector;
 
     private Dictionary<ItemType, GameObject> mItemLibrary;
     private RectTransform mContentTransform;
@@ -100,7 +103,7 @@ public class InventoryManager : MonoBehaviour
         lock (locker)
         {
             AddItem(aItem);
-            AddGold(-aItem.Price);
+            //AddGold(-aItem.Price);
             GoldAmount.text = mGoldAmount.ToString();
         }
     }
@@ -109,7 +112,7 @@ public class InventoryManager : MonoBehaviour
         lock (locker)
         {
             AddItem(aItem);
-            AddGold(aItem.Price);
+            //AddGold(aItem.Price);
             GoldAmount.text = mGoldAmount.ToString();
         }
     }
@@ -131,7 +134,7 @@ public class InventoryManager : MonoBehaviour
                 if(mItemLibrary.TryGetValue(aItem.Type, out itemCell))
                 {
                     var itemCellManager = itemCell.GetComponent<ItemManager>();
-                    itemCellManager.AddItem(aItem.Amount);
+                    //itemCellManager.AddItem(aItem.Amount);
                 }
             }
             else

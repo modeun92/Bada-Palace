@@ -1,25 +1,69 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType { FISH, STARFISH, SHELL, INVISIBLE_POTION, SPEED_POTION, KEY };
 
-[Serializable]
-public class Item: ICloneable
+namespace Assets.Scripts.Item
 {
-    public ItemType Type;
-    public int Price;
-    public int Amount;
-    public Sprite Image;
-
-    object ICloneable.Clone()
+    public enum ItemType { FISH, STARFISH, SHELL, INVISIBLE_POTION, SPEED_POTION, KEY };
+    [Serializable]
+    public class Item : ICloneable
     {
-        Item lItem = new Item();
-        lItem.Type = Type;
-        lItem.Price = Price;
-        lItem.Amount = Amount;
-        lItem.Image = Image;
-        return lItem;
+        public ItemType Type;
+        object ICloneable.Clone()
+        {
+            Item lItem = new Item();
+            lItem.Type = Type;
+            return lItem;
+        }
+    }
+    [Serializable]
+    public class ItemToShow : Item, ICloneable
+    {
+        public Sprite Image;
+        object ICloneable.Clone()
+        {
+            ItemToShow lItem = new ItemToShow();
+            lItem.Type = Type;
+            lItem.Image = Image;
+            return lItem;
+        }
+    }
+    [Serializable]
+    public class ItemForSale : ItemToShow, ICloneable
+    {
+        public int Price;
+        object ICloneable.Clone()
+        {
+            ItemForSale lItem = new ItemForSale();
+            lItem.Type = Type;
+            lItem.Price = Price;
+            lItem.Image = Image;
+            return lItem;
+        }
+    }
+    [Serializable]
+    public class ItemForInventory : ItemToShow, ICloneable
+    {
+        public int Amount;
+        object ICloneable.Clone()
+        {
+            ItemForInventory lItem = new ItemForInventory();
+            lItem.Type = Type;
+            lItem.Image = Image;
+            lItem.Amount = Amount;
+            return lItem;
+        }
+    }
+    [Serializable]
+    public class ItemToOwn : Item, ICloneable
+    {
+        public int Amount;
+        object ICloneable.Clone()
+        {
+            ItemToOwn lItem = new ItemToOwn();
+            lItem.Type = Type;
+            lItem.Amount = Amount;
+            return lItem;
+        }
     }
 }

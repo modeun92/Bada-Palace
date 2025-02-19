@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Global;
+using Assets.Scripts.Item;
 using Assets.Scripts.Maze;
 using System.Collections;
 using System.Collections.Generic;

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3858b86aa5437fd4eb41b7543e967c03, type: 3}
+  m_Name: ItemList
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - Type: 0
+    Image: {fileID: 1641290974564461915, guid: 0cfa681c1aad4c84e9e560100bf9f119, type: 3}
+    Price: 4
+  - Type: 1
+    Image: {fileID: 471769016230116879, guid: 0cfa681c1aad4c84e9e560100bf9f119, type: 3}
+    Price: 6
+  - Type: 2
+    Image: {fileID: -7687796380247041715, guid: 0cfa681c1aad4c84e9e560100bf9f119,
+      type: 3}
+    Price: 9
+  - Type: 3
+    Image: {fileID: 6998914925469369697, guid: 0cfa681c1aad4c84e9e560100bf9f119, type: 3}
+    Price: 22
+  - Type: 4
+    Image: {fileID: -4525709083523887123, guid: 0cfa681c1aad4c84e9e560100bf9f119,
+      type: 3}
+    Price: 18
+  - Type: 5
+    Image: {fileID: -9032548175271305076, guid: 0cfa681c1aad4c84e9e560100bf9f119,
+      type: 3}
+    Price: 7
